@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenCalphad Study: A Computational Approach to Phase Equilibria</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo"><span class="logo-mark">OC</span><span>OpenCalphad Study</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">Home</a></li>
+
+      <li class="has-dropdown">
+        <button class="nav-parent" aria-haspopup="true" aria-expanded="false" data-section="fundamentals">
+          Fundamentals <span class="nav-chevron"></span>
+        </button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="#opencalphad" role="menuitem"><span class="dd-dot"></span>Introduction to OpenCalphad</a></li>
+          <li><a href="#gnuplot" role="menuitem"><span class="dd-dot"></span>Introduction to Gnuplot</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <button class="nav-parent" aria-haspopup="true" aria-expanded="false" data-section="installation">
+          Installation <span class="nav-chevron"></span>
+        </button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="#oc-install" role="menuitem"><span class="dd-dot"></span>Installing OpenCalphad CAE</a></li>
+          <li><a href="#gnuplot-install" role="menuitem"><span class="dd-dot"></span>Installing Gnuplot</a></li>
+        </ul>
+      </li>
+
+      <li class="has-dropdown">
+        <button class="nav-parent" aria-haspopup="true" aria-expanded="false" data-section="examples">
+          Examples <span class="nav-chevron"></span>
+        </button>
+        <ul class="nav-dropdown" role="menu">
+          <li><a href="#case1-1" role="menuitem"><span class="dd-dot"></span>Case 1-1</a></li>
+          <li><a href="#case2-1" role="menuitem"><span class="dd-dot"></span>Case 2-1</a></li>
+          <li><a href="#case3-1" role="menuitem"><span class="dd-dot"></span>Case 3-1</a></li>
+          <li><a href="#case3-3" role="menuitem"><span class="dd-dot"></span>Case 3-3</a></li>
+          <li><a href="#case3-5" role="menuitem"><span class="dd-dot"></span>Case 3-5</a></li>
+        </ul>
+      </li>
+
+      <li><a href="#conclusion">Conclusion</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="container hero-inner">
+    <div class="hero-badge"><span class="dot"></span><span>Computational Thermodynamics Project</span></div>
+    <h1>OpenCalphad <span class="grad">Study</span></h1>
+    <p class="subtitle">A practical exploration of thermodynamic modelling using computational tools.</p>
+    <p class="tagline">Understanding materials through simulation, not just theory.</p>
+    <a href="#fundamentals" class="btn btn-primary">Explore Project <span class="arrow">→</span></a>
+  </div>
+</header>
+
+<!-- FUNDAMENTALS -->
+<section id="fundamentals">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-kicker">Fundamentals</span>
+      <h2>Building the foundation</h2>
+      <p>Core concepts behind OpenCalphad, from the CALPHAD method to Gibbs energy minimisation and data visualisation with Gnuplot.</p>
+    </div>
+
+    <!-- 01 Introduction -->
+    <div id="opencalphad" class="fundamentals-grid fund-single reveal">
+      <div class="card">
+        <h3><span class="card-num">01</span> Introduction to OpenCalphad</h3>
+        <p><strong>OpenCalphad (OC)</strong> is a free, open-source computational thermodynamics software for calculating phase equilibria and constructing phase diagrams in multicomponent alloy systems. It lets materials scientists predict which phases are stable under any given temperature, pressure, and composition, removing the need for costly trial-and-error experiments.</p>
+        <h4 style="margin-top:24px;margin-bottom:8px;font-size:1rem;">The CALPHAD Method</h4>
+        <p>OpenCalphad is built on the <strong>CALPHAD</strong> method (<em>CALculation of PHAse Diagrams</em>), the internationally accepted framework for computational thermodynamics.</p>
+        <p>CALPHAD works by combining experimental data with thermodynamic models to build mathematical descriptions of the Gibbs energy for every phase in a system. Once these descriptions exist in a database, phase equilibria can be calculated for any composition or temperature, including complex multicomponent alloys that could never be fully mapped by experiment alone.</p>
+        <p>The key insight is <strong>extrapolation</strong>: a CALPHAD database built from well-studied binary and ternary systems can reliably predict behaviour in 5-, 6-, or even 10-component industrial alloys.</p>
+        <div class="ipo-flow">
+          <div class="ipo-box input">
+            <div class="ipo-label">Input</div>
+            <ul><li>Elements (Fe, C, Cr&hellip;)</li><li>Composition</li><li>Temperature / Pressure</li><li>Database (.TDB)</li></ul>
+          </div>
+          <div class="ipo-arrow">→</div>
+          <div class="ipo-box process">
+            <div class="ipo-label">Process</div>
+            <ul><li>Gibbs energy models</li><li>Free energy minimisation</li><li>Equilibrium convergence</li></ul>
+          </div>
+          <div class="ipo-arrow">→</div>
+          <div class="ipo-box output">
+            <div class="ipo-label">Output</div>
+            <ul><li>Stable phases</li><li>Phase fractions</li><li>Phase diagrams</li></ul>
+          </div>
+        </div>
+        <h4 style="margin-top:28px;margin-bottom:8px;font-size:1rem;">How OpenCalphad Works</h4>
+        <p>OC determines equilibrium by finding the combination of phases with the lowest total Gibbs free energy. It reads Gibbs energy expressions for every phase from a <code class="inline">.TDB</code> thermodynamic database file, then uses a numerical minimiser to find the stable phase assemblage. The database is the model, and without it no calculation is possible.</p>
+        <h4 style="margin-top:20px;margin-bottom:8px;font-size:1rem;">Real-world Applications</h4>
+        <ul>
+          <li>Steel and iron alloy design (phase transformations, carbide stability)</li>
+          <li>Ni-superalloy and Al-alloy development</li>
+          <li>Solidification and casting simulation</li>
+          <li>Heat treatment optimisation</li>
+          <li>Corrosion, slag, and high-temperature chemistry</li>
+        </ul>
+        <h4 style="margin-top:20px;margin-bottom:8px;font-size:1rem;">Limitations</h4>
+        <ul>
+          <li>Predicts equilibrium only, with no kinetic or diffusion information directly</li>
+          <li>Accuracy is entirely dependent on database quality</li>
+          <li>The CAE (graphical) interface makes basic tasks easier, but advanced usage still requires learning command-line inputs, which can take time</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 02 Gnuplot -->
+    <div id="gnuplot" class="fundamentals-grid fund-single reveal" style="margin-top:24px;">
+      <div class="card">
+        <h3><span class="card-num">02</span> Introduction to Gnuplot</h3>
+        <p><strong>Gnuplot</strong> is a free, command-line plotting program widely used in scientific computing. OpenCalphad generates numerical output, such as tables of temperatures, compositions and phase fractions. Gnuplot takes that data and turns it into phase diagrams, property diagrams and other graphs, making results easier to interpret and share.</p>
+        <p>OpenCalphad CAE calls Gnuplot automatically whenever a plot is generated, as long as it is installed and linked correctly. Users can customise axis labels, line styles and legends through OC CAE's "Modified Gnuplot" output option. In short, Gnuplot is the visualisation layer that brings OpenCalphad's results to life.</p>
+        <p><strong>Key point:</strong> Gnuplot is a separate program that must be installed alongside OC CAE. The installation guide below walks through this process step by step.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTALLATION -->
+<section id="installation">
+  <div class="container">
+
+    <div class="section-head reveal">
+      <span class="section-kicker">Installation</span>
+      <h2>Setting Up Your Environment</h2>
+      <p>Follow the steps below to install OpenCalphad CAE and link it with Gnuplot for full plotting support.</p>
+    </div>
+
+    <!-- Download -->
+    <div style="margin-bottom: 28px;">
+      <a href="https://www.dropbox.com/scl/fo/vm4uzzhvomtbc6i2m716j/AH224QtK7a8FtNxPIAnwNJ0?rlkey=e9hwdcheu241cfzpa6ealuql9&e=2&st=s9zgeqrv&dl=0"
+         target="_blank" rel="noopener" class="dl-btn">
+        <span class="dl-icon">📦</span> Download OpenCalphad CAE
+      </a>
+      <p style="color: var(--ink-2); font-size: .95rem; margin-bottom: 14px;">
+        Download <code class="inline">OC_CAE_Setup_ver007.exe</code> or above from the official Dropbox
+        folder containing the installer along with sample databases and documentation.
+      </p>
+    </div>
+ 
+<!-- ══════════════════════════════════════════
+     PART A — OpenCalphad CAE Installation
+     ══════════════════════════════════════════ -->
+<div class="inst-phase reveal">
+ 
+  <div class="inst-phase-hd">
+    <div class="inst-phase-badge">A</div>
+    <div class="inst-phase-hd-text">
+      <h3>Installing OpenCalphad CAE</h3>
+      <p>Run the installer and launch the application.</p>
+    </div>
+  </div>
+ 
+  <!-- Steps 1 & 2 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">1</span>
+        <h4>Handle the Windows SmartScreen warning</h4>
+      </div>
+      <p>Double-click the installer. Windows Defender SmartScreen will show a blue warning.
+         Click <strong>"More info"</strong> then <strong>"Run anyway"</strong> to proceed.</p>
+      <div class="ss-wrap">
+        <img src="images/OC_image_1.png" alt="SmartScreen warning — click More info then Run anyway" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">2</span>
+        <h4>Accept the Licence Agreement</h4>
+      </div>
+      <p>The OpenCalphad CAE Setup wizard opens. Read the EULA, select
+         <strong>"I accept the agreement"</strong>, then click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/OC_image_2.png" alt="Setup wizard — accept licence agreement" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Steps 3 & 4 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">3</span>
+        <h4>Choose the installation folder</h4>
+      </div>
+      <p>The default destination is <code class="inline">C:\OpenCalphad_CAE_0_0_7</code>.
+         Keep this default to avoid path-related issues later. Click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/OC_image_3.png" alt="Choose installation folder" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">4</span>
+        <h4>Review settings and click Install</h4>
+      </div>
+      <p>The "Ready to Install" screen summarises your chosen destination and shortcuts.
+         Confirm these are correct, then click <strong>Install</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/OC_image_4.png" alt="Ready to Install screen" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Step 5 — single centred card -->
+  <div class="ss-grid ss-grid-single">
+ 
+    <div class="step-card step-card-centered">
+      <div class="step-card-header">
+        <span class="ist-dot">5</span>
+        <h4>Finish and launch OC CAE</h4>
+      </div>
+      <p>When setup completes, the "Completing the OpenCalphad_CAE Setup Wizard" screen appears.
+         Ensure <strong>"Launch OpenCalphad_CAE"</strong> is ticked, then click <strong>Finish</strong>.
+         The application opens immediately.</p>
+      <div class="ss-wrap">
+        <img src="images/OC_image_5.png" alt="Setup complete — launch OpenCalphad CAE" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid-single -->
+ 
+</div><!-- /inst-phase A -->
+ 
+ 
+<!-- ══════════════════════════════════════════
+     PART B — Gnuplot Installation
+     ══════════════════════════════════════════ -->
+<div id="gnuplot-install" class="inst-phase reveal">
+ 
+  <div class="inst-phase-hd">
+    <div class="inst-phase-badge g">G</div>
+    <div class="inst-phase-hd-text">
+      <h3>Installing Gnuplot</h3>
+      <p>Link Gnuplot with OpenCalphad CAE for plot generation.</p>
+    </div>
+  </div>
+ 
+  <!-- Steps 1 & 2 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">1</span>
+        <h4>Open the Tools tab and select Install Gnuplot</h4>
+      </div>
+      <p>In OpenCalphad CAE, go to the <strong>Tools</strong> menu and click
+         <strong>Install Gnuplot</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_1.png" alt="Tools menu — Install Gnuplot option" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">2</span>
+        <h4>Download Gnuplot</h4>
+      </div>
+      <p>The Install Gnuplot dialog opens. Click <strong>Install Gnuplot</strong>
+         to download the installer from SourceForge.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_2.png" alt="Install Gnuplot dialog" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Steps 3 & 4 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">3</span>
+        <h4>Select Language</h4>
+      </div>
+      <p>A language selection prompt appears. Choose <strong>English</strong>
+         and click <strong>OK</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_3.png" alt="Language selection — choose English" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">4</span>
+        <h4>Accept the Gnuplot licence and click Next</h4>
+      </div>
+      <p>Read the licence, select <strong>"I accept the agreement"</strong>,
+         then click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_4.png" alt="Gnuplot licence agreement" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Steps 5 & 6 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">5</span>
+        <h4>Read information and click Next</h4>
+      </div>
+      <p>An information screen appears with Gnuplot details.
+         Click <strong>Next</strong> to continue.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_5.png" alt="Gnuplot information screen" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">6</span>
+        <h4>Keep default installation path</h4>
+      </div>
+      <p>The default location is <code class="inline">C:\Program Files (x86)\gnuplot</code>.
+         Keep it to avoid path issues later. Click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_6.png" alt="Gnuplot default installation path" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Steps 7 & 8 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">7</span>
+        <h4>Select components and click Next</h4>
+      </div>
+      <p>Keep the default "Full installation" selected. Click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_7.png" alt="Select Gnuplot components — Full installation" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">8</span>
+        <h4>Select Start Menu folder and click Next</h4>
+      </div>
+      <p>Keep the default Start Menu folder for gnuplot. Click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_8.png" alt="Select Start Menu folder" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Steps 9 & 10 -->
+  <div class="ss-grid">
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">9</span>
+        <h4>Select default terminal</h4>
+      </div>
+      <p>Under "Select gnuplot's default terminal", choose
+         <strong>"Don't change my GNUTERM environment variable"</strong>
+         and click <strong>Next</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_9.png" alt="Select Gnuplot default terminal" loading="lazy">
+      </div>
+    </div>
+ 
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">10</span>
+        <h4>Click Install</h4>
+      </div>
+      <p>The "Ready to Install" screen appears.
+         Click <strong>Install</strong> to begin installation.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_10.png" alt="Gnuplot Ready to Install screen" loading="lazy">
+      </div>
+    </div>
+ 
+  </div><!-- /ss-grid -->
+ 
+  <!-- Steps 11 & 12 -->
+  <div class="ss-grid">
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">11</span>
+        <h4>Click Finish</h4>
+      </div>
+      <p>The "Completing the gnuplot Setup Wizard" screen appears.
+         Click <strong>Finish</strong>.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_11.png" alt="Gnuplot setup complete — click Finish" loading="lazy">
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">12</span>
+        <h4>Verify and configure Gnuplot</h4>
+      </div>
+      <p>Back in OC CAE, click <strong>Verify and config Gnuplot</strong>.
+         A Gnuplot window opens with a sample plot.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_12.png" alt="Verify and configure Gnuplot in OC CAE" loading="lazy">
+      </div>
+    </div>
+
+  </div><!-- /ss-grid -->
+
+  <!-- Steps 13 & 14 -->
+  <div class="ss-grid">
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">13</span>
+        <h4>Gnuplot window appears</h4>
+      </div>
+      <p>A Gnuplot plot window should appear, confirming the link between
+         OC CAE and Gnuplot is working correctly.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_13.png" alt="Gnuplot verification plot window" loading="lazy">
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-card-header">
+        <span class="ist-dot">14</span>
+        <h4>Verification passed</h4>
+      </div>
+      <p>OC CAE confirms the Gnuplot link is working. The verification screen
+         shows a success message. Setup is complete.</p>
+      <div class="ss-wrap">
+        <img src="images/Gnuplot_image_14.png" alt="Verification passed confirmation" loading="lazy">
+        <p class="ss-cap">It passed the verification!</p>
+      </div>
+    </div>
+
+  </div><!-- /ss-grid -->
+ 
+</div><!-- /inst-phase G -->
+ 
+    <!-- Success banner -->
+    <div class="inst-success">
+      <div class="si">✅</div>
+      <div>
+        <h4>Verification passed!</h4>
+        <p>OC CAE confirms the installation is successful. You are now ready to run
+           thermodynamic calculations and generate plots.</p>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</section><!-- /installation -->
+
+<!-- EXAMPLES -->
+<section id="examples" style="background:var(--bg-soft);">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-kicker">Examples</span>
+      <h2>Example Analyses Using OpenCalphad</h2>
+      <p>Worked examples demonstrating OpenCalphad CAE across single equilibrium, property diagrams, phase diagrams and solidification calculations.</p>
+    </div>
+
+    <style>
+      .case-study-list{display:flex;flex-direction:column;gap:32px;}
+      .case-card{background:white;border:1px solid var(--line);border-radius:var(--radius-lg);padding:36px;transition:all .35s var(--ease);position:relative;overflow:hidden;}
+      .case-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--gradient-brand);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease);}
+      .case-card:hover::before{transform:scaleX(1);}
+      .case-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:var(--purple-100);}
+      .case-card-title{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+      .case-badge{display:inline-block;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--blue-600);background:var(--blue-50);padding:5px 12px;border-radius:6px;white-space:nowrap;flex-shrink:0;}
+      .case-card-title h3{font-size:1.2rem;font-weight:600;margin:0;}
+      .case-section-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--purple-600);margin-bottom:6px;}
+      .case-objective{color:var(--ink-2);font-size:0.95rem;background:var(--bg-soft);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:20px;border-left:3px solid var(--blue-500);}
+      /* ── Plot grid ── */
+      .plot-row{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:20px;}
+      .plot-item{display:flex;flex-direction:column;align-items:center;flex:1 1 calc(50% - 8px);min-width:220px;max-width:450px;}
+      .plot-item.solo{flex:0 1 450px;}
+      .plot-item img{width:100%;max-width:450px;height:auto;object-fit:contain;display:block;border-radius:10px;box-shadow:0 4px 16px rgba(59,111,216,0.10),0 1px 4px rgba(30,45,90,0.06);background:white;}
+      .plot-caption{margin-top:7px;font-size:0.78rem;color:var(--ink-3);font-style:italic;text-align:center;line-height:1.4;}
+      .case-conclusions-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--purple-600);margin-bottom:10px;}
+      .case-conclusions ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px;}
+      .case-conclusions ul li{display:flex;align-items:flex-start;gap:10px;color:var(--ink-2);font-size:0.93rem;line-height:1.6;}
+      .case-conclusions ul li::before{content:'▸';color:var(--purple-500);flex-shrink:0;margin-top:1px;font-size:0.85rem;}
+      @media(max-width:640px){
+        .plot-item,.plot-item.solo{flex:1 1 100%;max-width:100%;}
+        .case-card{padding:22px 16px;}
+      }
+    </style>
+
+    <div class="case-study-list">
+
+      <!-- Case 1-1 — 1 image centred -->
+      <div id="case1-1" class="case-card reveal">
+        <div class="case-card-title">
+          <span class="case-badge">Case 1-1</span>
+          <h3>Single Equilibrium: Fe–C–Cr</h3>
+        </div>
+        <div class="case-section-label">Objective</div>
+        <div class="case-objective">
+          To study which phases are stable and their fractions for an Fe–0.1 wt% C–1 wt% Cr alloy at 1000 K.
+        </div>
+        <div class="case-section-label">Plot</div>
+        <div class="plot-row">
+          <div class="plot-item solo">
+            <img src="images/Case_1-1.png" alt="Case 1-1: Fe-C-Cr phase fractions at 1000 K">
+            <div class="plot-caption">Phase fractions at T=1000 K, W(C)=0.001, W(Cr)=0.01</div>
+          </div>
+        </div>
+        <div class="case-conclusions-label">Conclusions</div>
+        <div class="case-conclusions">
+          <ul>
+            <li>At 1000 K, the alloy is dominated by BCC-A2 (ferrite), constituting nearly the entire structure (~98.95%).</li>
+            <li>A small amount of alloy carbide M7C3 (~0.87%) is also present, along with a very minor fraction of cementite (~0.17%).</li>
+            <li>Even a small addition of chromium (~1%) promotes the formation of complex carbides rather than maintaining a simple solid solution.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Case 2-1 — 2 images side by side -->
+      <div id="case2-1" class="case-card reveal">
+        <div class="case-card-title">
+          <span class="case-badge">Case 2-1</span>
+          <h3>Property Diagram: Fe–C</h3>
+        </div>
+        <div class="case-section-label">Objective</div>
+        <div class="case-objective">
+          To understand how phase fractions change with temperature for steels with different carbon contents (0.1 wt% C and 1 wt% C).
+        </div>
+        <div class="case-section-label">Plots</div>
+        <div class="plot-row">
+          <div class="plot-item">
+            <img src="images/Case_2-1a.png" alt="Case 2-1(a): Fe-1%C mole fraction vs temperature">
+            <div class="plot-caption">(a) Fe–1%C: Mole fraction of phase vs Temperature</div>
+          </div>
+          <div class="plot-item">
+            <img src="images/Case_2-1b.png" alt="Case 2-1(b): Fe-0.1%C temperature vs composition">
+            <div class="plot-caption">(b) Fe–0.1%C: Carbon content in coexisting phases vs Temperature (K)</div>
+          </div>
+        </div>
+        <div class="case-conclusions-label">Conclusions</div>
+        <div class="case-conclusions">
+          <ul>
+            <li>Plot (a) shows for Fe–1%C that BCC (ferrite) dominates at low temperatures, FCC (austenite) appears at intermediate temperatures, and liquid is stable above ~1760 K, with graphite appearing only near the melting point.</li>
+            <li>Plot (b) shows how carbon distributes between coexisting phases in Fe–0.1%C: the BCC phase holds very little carbon, while the liquid and FCC phases dissolve progressively more carbon as temperature increases.</li>
+            <li>Together the two plots confirm that carbon solubility is markedly higher in austenite (FCC) than in ferrite (BCC), which is the thermodynamic basis for carburising and quench-hardening heat treatments.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Case 3-1 — 2 images side by side -->
+      <div id="case3-1" class="case-card reveal">
+        <div class="case-card-title">
+          <span class="case-badge">Case 3-1</span>
+          <h3>Phase Diagram: Fe–C</h3>
+        </div>
+        <div class="case-section-label">Objective</div>
+        <div class="case-objective">
+          To generate a temperature vs composition (T–X) diagram for the Fe–C binary system.
+        </div>
+        <div class="case-section-label">Plots</div>
+        <div class="plot-row">
+          <div class="plot-item">
+            <img src="images/Case_3-1a.png" alt="Case 3-1(a): Mole fraction vs Temperature">
+            <div class="plot-caption">(a) Phase fractions vs Temperature at fixed W(C)=0.001</div>
+          </div>
+          <div class="plot-item">
+            <img src="images/Case_3-1b.png" alt="Case 3-1(b): Temperature vs Composition">
+            <div class="plot-caption">(b) Temperature vs Composition (w% C)</div>
+          </div>
+        </div>
+        <div class="case-conclusions-label">Conclusions</div>
+        <div class="case-conclusions">
+          <ul>
+            <li>Plot (a) at fixed W(C)=0.001 shows that BCC-A2 (ferrite) is dominant at low temperatures, FCC-A1 (austenite) appears in the intermediate range (~1000–1200 K), and liquid forms above ~1800 K; a trace of graphite is present throughout.</li>
+            <li>Plot (b) reproduces the classic Fe–C phase diagram: the eutectic point (~1420 K, ~4.3 wt% C) and the eutectoid (~1000 K, ~0.76 wt% C) are clearly visible from the phase boundaries.</li>
+            <li>The significantly larger FCC region compared to BCC in the T-X diagram confirms that austenite can dissolve far more carbon, which underpins the entire basis of steel heat treatment.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Case 3-3 — 3 images: row of 2 then 1 centred -->
+      <div id="case3-3" class="case-card reveal">
+        <div class="case-card-title">
+          <span class="case-badge">Case 3-3</span>
+          <h3>Ternary Phase Diagram: Fe–Cr–Ni</h3>
+        </div>
+        <div class="case-section-label">Objective</div>
+        <div class="case-objective">
+          To study phase stability at constant temperatures (1000 K and 1200 K) and understand how chromium and nickel influence the phase diagram.
+        </div>
+        <div class="case-section-label">Plots</div>
+        <div class="plot-row">
+          <div class="plot-item">
+            <img src="images/Case_3-3a.png" alt="Case 3-3(a): Fe-Cr-Ni isothermal section at T=1000 K">
+            <div class="plot-caption">(a) Fe–Cr–Ni isothermal section at T=1000 K</div>
+          </div>
+          <div class="plot-item">
+            <img src="images/Case_3-3b.png" alt="Case 3-3(b): Fe-Cr-Ni isothermal section at T=1200 K">
+            <div class="plot-caption">(b) Fe–Cr–Ni isothermal section at T=1200 K</div>
+          </div>
+        </div>
+        <div class="plot-row">
+          <div class="plot-item solo">
+            <img src="images/Case_3-3c.png" alt="Case 3-3(c): Fe-axis projection at T=1200 K">
+            <div class="plot-caption">(c) Fe-axis projection at T=1200 K</div>
+          </div>
+        </div>
+        <div class="case-conclusions-label">Conclusions</div>
+        <div class="case-conclusions">
+          <ul>
+            <li>Nickel stabilises austenite (FCC) while chromium stabilises ferrite (BCC); their balance controls the resulting phase.</li>
+            <li>The sigma (σ) phase region is clearly identified — a brittle intermetallic that is generally undesirable in engineering applications.</li>
+            <li>Tie-lines and phase regions reveal how elements distribute between phases, which is crucial for designing duplex stainless steels.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Case 3-5 — 1 image centred -->
+      <div id="case3-5" class="case-card reveal">
+        <div class="case-card-title">
+          <span class="case-badge">Case 3-5</span>
+          <h3>Phase Diagram: Fe–C–Cr</h3>
+        </div>
+        <div class="case-section-label">Objective</div>
+        <div class="case-objective">
+          To analyse phase stability of the Fe–C–Cr system with respect to composition of C and temperature.
+        </div>
+        <div class="case-section-label">Plot</div>
+        <div class="plot-row">
+          <div class="plot-item solo">
+            <img src="images/Case_3-5.png" alt="Case 3-5: Fe-C-Cr temperature vs W%(C) at W(CR)=0.13">
+            <div class="plot-caption">Temperature vs W%(C) at W(Cr)=0.13</div>
+          </div>
+        </div>
+        <div class="case-conclusions-label">Conclusions</div>
+        <div class="case-conclusions">
+          <ul>
+            <li>The diagram maps phase stability across the full range of carbon composition (0–2 wt% C) at a fixed Cr content of 13 wt%, showing how increasing C shifts the system from ferritic to austenitic and then into carbide-forming regions.</li>
+            <li>BCC-A2 (ferrite) is stable at low carbon contents; FCC-A1 (austenite) expands with increasing carbon, consistent with carbon being a strong austenite stabiliser.</li>
+            <li>Alloy carbides M7C3 and M23C6 appear at distinct carbon and temperature ranges — M23C6 at lower carbon/temperature and M7C3 at higher carbon content — which is critical for understanding carbide precipitation in Cr-bearing steels.</li>
+            <li>The invariant lines (marked) indicate temperatures where three phases coexist, defining the limits of heat treatment windows for this alloy composition.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div><!-- end case-study-list -->
+
+    <div class="pdf-cta reveal">
+      <p>📄 For detailed procedure and full examples, refer to the complete document below:</p>
+      <a href="https://www.dropbox.com/scl/fo/vm4uzzhvomtbc6i2m716j/AGRTtb6N9m0Dv8Sf55LY5Q0/OpenCalphad_CAE_StepByStep_Examples.pdf?rlkey=e9hwdcheu241cfzpa6ealuql9&st=ig9th9t2&dl=0" target="_blank" class="btn btn-primary">📘 View Full Examples PDF <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+
+<!-- CONCLUSION -->
+<section id="conclusion">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="section-kicker">Conclusion</span>
+      <h2>Where theory meets computation</h2>
+      <p>OpenCalphad gives a hands-on way to understand phase behaviour beyond what textbooks alone can teach, connecting classical thermodynamics to the materials used every day in industry.</p>
+    </div>
+    <div class="conclusion-grid reveal">
+      <div class="conclusion-item">
+        <div class="conclusion-icon">🔬</div>
+        <h4>Phase behaviour</h4>
+        <p>OpenCalphad makes complex multi-phase systems tractable and interpretable.</p>
+      </div>
+      <div class="conclusion-item">
+        <div class="conclusion-icon">⚙️</div>
+        <h4>Theory + computation</h4>
+        <p>Combines classical thermodynamics with numerical Gibbs-energy minimisation.</p>
+      </div>
+      <div class="conclusion-item">
+        <div class="conclusion-icon">🏭</div>
+        <h4>Industrial relevance</h4>
+        <p>Directly applicable to alloy design, casting, heat treatment and failure analysis.</p>
+      </div>
+    </div>
+    <div class="team-block reveal">
+      <div class="team-head"><span class="section-kicker">Project Team</span></div>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="name">Apoorva Rajabhoj</div>
+          <a class="email" href="mailto:apoorva.rajabhoj.met24@itbhu.ac.in">apoorva.rajabhoj.met24@itbhu.ac.in</a>
+          <a class="linkedin-link" href="https://www.linkedin.com/in/apoorva-rajabhoj-aa873b34b?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            Apoorva Rajabhoj
+          </a>
+        </div>
+        <div class="team-member">
+          <div class="name">Leela Ananya</div>
+          <a class="email" href="mailto:gleela.ananya.met24@itbhu.ac.in">gleela.ananya.met24@itbhu.ac.in</a>
+          <a class="linkedin-link" href="https://www.linkedin.com/in/leelaananyareddy?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            Leela Ananya
+          </a>
+        </div>
+        <div class="team-member">
+          <div class="name">Manish Meena</div>
+          <a class="email" href="mailto:manish.meena.met24@itbhu.ac.in">manish.meena.met24@itbhu.ac.in</a>
+          <a class="linkedin-link" href="https://www.linkedin.com/in/manish-meena-2352a4346?utm_source=share_via&utm_content=profile&utm_medium=member_ios" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            Manish Meena
+          </a>
+        </div>
+        <div class="team-member">
+          <div class="name">Priyanshi Arora</div>
+          <a class="email" href="mailto:priyanshi.arora.met24@itbhu.ac.in">priyanshi.arora.met24@itbhu.ac.in</a>
+          <a class="linkedin-link" href="https://www.linkedin.com/in/priyanshi-arora-096247326?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            Priyanshi Arora
+          </a>
+        </div>
+      </div>
+      <div class="guide-block">
+        <div class="guide-label">Under the guidance of</div>
+        <div class="guide-name">Prof. Vikas Jindal</div>
+        <div class="guide-email"><a href="mailto:vjindal.met@iitbhu.ac.in">vjindal.met@iitbhu.ac.in</a></div>
+        <div><a class="guide-linkedin" href="https://www.linkedin.com/in/vijindal?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer">
+          <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+          Vikas Jindal
+        </a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="foot-line">Exploratory Project &middot; Session 2025&ndash;26</p>
+    <p class="foot-sub">IIT (BHU), Varanasi &middot; Metallurgical Engineering</p>
+  </div>
+</footer>
+
+<!-- Script -->
+<script src="script.js"></script>
+</body>
+</html>
